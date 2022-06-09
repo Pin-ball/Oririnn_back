@@ -6,7 +6,7 @@ var express = require('express');
 const cors = require("cors");
 var con = require("./config");
 var path = require("path")
-const port = 8000;
+const port = process.env.PORT || 8000;
 
 var indexRouter = require('./routes/index');
 
@@ -23,7 +23,7 @@ app.use(cors());
 // });
 
 
-app.listen(process.env.PORT || port,  () => {
+app.listen(port,  () => {
   console.log(`listening on port ${port}`); 
 });
 
