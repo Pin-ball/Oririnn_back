@@ -23,7 +23,7 @@ app.use(cors());
 // });
 
 
-app.listen(port,  () => {
+app.listen(process.env.PORT || port,  () => {
   console.log(`listening on port ${port}`); 
 });
 
