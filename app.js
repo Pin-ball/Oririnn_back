@@ -1,4 +1,5 @@
-require('dotenv').config({path: `.env.${process.env.NODE_ENV}`})
+// require('dotenv').config({path: `.env.${process.env.NODE_ENV}`})
+require('dotenv').config()
 
 var createError = require('http-errors');
 var express = require('express');
@@ -16,10 +17,10 @@ app.use(express.json());
 app.use(cors());
 
 
-app.use(express.static(path.join(__dirname, 'build_front')))
-app.get("/*", function (req, res) {
-  res.sendFile(path.join(__dirname, 'build_front', 'index.html'))
-});
+// app.use(express.static(path.join(__dirname, 'build_front')))
+// app.get("/*", function (req, res) {
+//   res.sendFile(path.join(__dirname, 'build_front', 'index.html'))
+// });
 
 
 app.listen(port,  () => {
