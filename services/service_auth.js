@@ -18,8 +18,8 @@ async function register(body) {
     async function login(body) {
  
         const [rows, field] = await con.promise().execute('SELECT * from users WHERE email= ?', [body.email]);
-        const email = await rows[0].email;
-        const password = await rows[0].password;
+        const email =  rows[0].email;
+        const password = rows[0].password;
         const verifyPassword = await bcrypt.compare(body.password, password);
         const token = jwt.sign(
             {

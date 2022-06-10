@@ -37,17 +37,23 @@ router.post("/register", async function (req, res) {
       });
       
       router.post("/login", async function (req, res) {
-        const user = await req.body;
-        con.query(
-          `SELECT * from users WHERE email= '${user.email}'`,
-          async function (err, rows, fields) {
+        // const user = await req.body;
+
+        const [rows, field] = await con.promise().execute('SELECT * from users WHERE email= ?', [req.body.email]);
+
+
+        // con.query(
+        //   `SELECT * from users WHERE email= '${user.email}'`,
+        //   async function (err, rows, fields) {
             if (!rows[0]) {
               return res.status(400).json({ message: "Invalid Auth Details" });
             }
-          }
-          );
+            else {
+          // }
+          // );
           const result = await Authentication.login(req.body);
           return res.status(200).json(result);
+            }
         });
         
         module.exports = router;
