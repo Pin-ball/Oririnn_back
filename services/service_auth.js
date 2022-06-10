@@ -19,8 +19,12 @@ async function register(body) {
         if (!body.email) {
             return "Invalid Auth Details"
         }
-        else {
+        
         const [rows, field] = await con.promise().execute('SELECT * from users WHERE email= ?', [body.email]);
+
+        if (!rows[0]) {
+            return "Invalid Auth Details"
+        }
         const email = await rows[0].email;
         const password = await rows[0].password;
         const verifyPassword = await bcrypt.compare(body.password, password);
@@ -40,7 +44,6 @@ async function register(body) {
             } else {
                 return "Invalid Auth Details"
             }
-        }
     }
                
     module.exports = {
