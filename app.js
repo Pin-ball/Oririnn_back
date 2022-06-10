@@ -32,7 +32,7 @@ app.use('/static', express.static('public'))
 app.use('/', indexRouter);
 
 
-con.connect()
+// con.connect()
 
 
 module.exports = app;
