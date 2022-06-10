@@ -16,7 +16,10 @@ async function register(body) {
     }
     
     async function login(body) {
- 
+        if (!body.email) {
+            return "Invalid Auth Details"
+        }
+
         const [rows, field] = await con.promise().execute('SELECT * from users WHERE email= ?', [body.email]);
         const email = await rows[0].email;
         const password = await rows[0].password;
