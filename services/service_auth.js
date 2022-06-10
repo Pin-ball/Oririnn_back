@@ -16,40 +16,30 @@ async function register(body) {
     }
     
     async function login(body) {
-        if (!body.email) {
-            return "Invalid Auth Details"
-        }
-        else {
-            const [rows, field] = await con.promise().execute('SELECT * from users WHERE email= ?', [body.email]);
-
-            if (!rows[0]) {
+ 
+        const [rows, field] = await con.promise().execute('SELECT * from users WHERE email= ?', [body.email]);
+        const email = await rows[0].email;
+        const password = await rows[0].password;
+        const verifyPassword = await bcrypt.compare(body.password, password);
+        const token = jwt.sign(
+            {
+                id: rows[0].id,
+                firstname: rows[0].firstname,
+                lastname: rows[0].lastname,
+                admin: rows[0].admin,
+            },
+            SECRET,
+            { expiresIn: "24 hours" }
+            );
+            
+            if (email === body.email && verifyPassword) {
+                return { AcessToken: token };
+            } else {
                 return "Invalid Auth Details"
             }
-            else {
-            const email = await rows[0].email;
-            const password = await rows[0].password;
-            const verifyPassword = await bcrypt.compare(body.password, password);
-            const token = jwt.sign(
-                {
-                    id: rows[0].id,
-                    firstname: rows[0].firstname,
-                    lastname: rows[0].lastname,
-                    admin: rows[0].admin,
-                },
-                SECRET,
-                { expiresIn: "24 hours" }
-                );
-                
-                if (email === body.email && verifyPassword) {
-                    return { AcessToken: token };
-                } else {
-                    return "Invalid Auth Details"
-                }
-            }
         }
-    }
                
-    module.exports = {
-        register, login
-    };
-    
+        module.exports = {
+            register, login
+        };
+        
