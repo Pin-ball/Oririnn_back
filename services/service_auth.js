@@ -19,7 +19,7 @@ async function register(body) {
         if (!body.email) {
             return "Invalid Auth Details"
         }
-
+        else {
         const [rows, field] = await con.promise().execute('SELECT * from users WHERE email= ?', [body.email]);
         const email = await rows[0].email;
         const password = await rows[0].password;
@@ -41,8 +41,9 @@ async function register(body) {
                 return "Invalid Auth Details"
             }
         }
+    }
                
-        module.exports = {
-            register, login
-        };
-        
+    module.exports = {
+        register, login
+    };
+    
