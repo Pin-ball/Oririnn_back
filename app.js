@@ -7,7 +7,7 @@ const cors = require("cors");
 var con = require("./config");
 var path = require("path")
 const port = process.env.PORT || 8000;
-const host = process.env.HOST || '0.0.0.0';
+const host = '0.0.0.0';
 
 var indexRouter = require('./routes/index');
 
